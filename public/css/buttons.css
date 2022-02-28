@@ -1,0 +1,37 @@
+#submit1, #submit2, #submit3, #submit4{
+    position: relative;
+    border: 0;
+    font-family: 'Lato';
+}
+
+@media  screen and (min-width: 400px) {
+    #submit1{}
+    #submit2{}
+    #submit3{}
+    #submit4{}
+}
+  @media  screen and (min-width: 720px) {
+    #submit1{right: 235px; bottom: 400px;padding:10px}
+    #submit2{right: 360px;bottom: 100px; padding: 10px}
+    #submit3{left:220px; bottom:250px;padding:10px}
+    #submit4{}
+  }
+  @media  screen and (min-width: 1300px) {
+    #submit1{}
+    #submit2{}
+    #submit3{}
+    #submit4{}
+  }
+  @media  screen and (min-width: 1600px) {
+    #submit1{}
+    #submit2{}
+    #submit3{}
+    #submit4{}
+  }
+
+  @media  screen and (min-width: 1920px) {
+    #submit1{}
+    #submit2{}
+    #submit3{}
+    #submit4{}
+  }
