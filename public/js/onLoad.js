@@ -45,6 +45,7 @@ function uid(){ //https://stackoverflow.com/questions/3231459/create-unique-id-w
     return (idstr);
 }
 function run(){
+var sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))//loading.io
 var usid = localStorage.getItem("uid")
 if(usid == null){
     document.getElementById("submit1").style.visibility = "hidden"
@@ -64,7 +65,22 @@ if(usid == null){
       })
       .then((value) => {
         document.getElementById("bafarada").innerHTML = ""
-        escriure(`Hola ${value}! Benvingut a Escull la teva aventura. El joc es molt senzill: Jo et mostraré un fragment del llibre, i després de llegir-lo, tu hauràs d'escollir entre 2 (o més!) opcions. Algunes d'aquestes opcions et revelaran finals alternatius, bons i dolents, i algunes altres opcions et permetran seguir amb el fil de la història. Estàs preparat? `, 50)
+        escriure(`Hola ${value}! Benvingut a Escull la teva aventura. El joc es molt senzill: Jo et mostraré un fragment del llibre, i després de llegir-lo, tu hauràs d'escollir entre 2 (o més) opcions. Algunes d'aquestes opcions et revelaran finals alternatius, bons i dolents, i algunes altres opcions et permetran seguir amb el fil de la història. Estàs preparat? `, 50)
+        var start = async() =>{        
+          await sleep(22000)
+          console.log("test")
+          var container = document.getElementById("bafarada")
+          var newData = `  <div class="switch">	
+          <input type="radio" name="choice" id="yes">
+          <label for="yes">Sí</label>
+          <input type="radio" name="choice" id="no">
+          <label for="no">No</label>
+          <span class="switchFilter"></span>
+        </div>
+      `
+      container.innerHTML += newData
+        }
+        start()
       });
     
 }
@@ -105,12 +121,9 @@ else{
 }
 
 function next(lvl){
- 
 
-
-    
- 
     var container = document.getElementById('bafarada');
+    if(container.innerHTML != "Error"){
     var button = `<div class="wrapper">
     <a class="cta" href="#" onclick="update()">
       <span>Següent</span>
@@ -126,10 +139,11 @@ function next(lvl){
     </a>
   </div>
 
-`
+`   
+    console.log(container.innerHTML);
     container.innerHTML += button
 
-
+    }
 }
 function update(){
     var lvl = localStorage.getItem("lvl")
