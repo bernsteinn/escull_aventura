@@ -1,3 +1,10 @@
+var gifs;
+window.onload = function() {
+  gifs = Gifffer();
+  setTimeout( function() {
+    gifs[0].click(); //will play the first gif
+  }, 1000);
+}
 async function escriure(text, velocitat, callbackTrue, callback, seconds, lvl){
 var i = 0;
 var txt = text;
@@ -44,43 +51,77 @@ function uid(){ //https://stackoverflow.com/questions/3231459/create-unique-id-w
 
     return (idstr);
 }
-function run(){
-var sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))//loading.io
-var usid = localStorage.getItem("uid")
+function precheck(){
+  var cache = document.createElement("CACHE"); //images guardades aqui
+  document.body.appendChild(cache);
+  function images() {
+      for (var i=0; i<arguments.length; i++) {
+          var img = new Image();
+          img.src = arguments[i];
+          var parent = arguments[i].split("/")[1];
+          if ($(`cache #${parent}`).length == 0) {
+              var ele = document.createElement("DIV");
+              ele.id = parent;
+              cache.appendChild(ele);
+          }
+          $(`cache #${parent}`)[0].appendChild(img);
+          console.log(parent);
+      }
+  }
+  var usid = localStorage.getItem("uid")
 if(usid == null){
     document.getElementById("submit1").style.visibility = "hidden"
     document.getElementById("submit2").style.visibility = "hidden"
     document.getElementById("submit3").style.visibility = "hidden"
     console.log("nou usuari")
-    var nou_usuari = String(uid())
-    var browserData = `{"uid":"${nou_usuari}"}`
-    $.post("/users", $.parseJSON(browserData), function(data){
-        console.log(data)
-        if(data.result.acknowledged == true){
-            localStorage.setItem("uid",data.user_id)
-        }
-    })    
+    images("/resources/img/happy.gif")
+    
+}
+images("/resources/img/happy.gif")
+}
+function run(){
+var sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))//loading.io
+var usid = localStorage.getItem("uid")
+if(usid == null){
+  var nou_usuari = String(uid())
+  var browserData = `{"uid":"${nou_usuari}"}`
+  $.post("/users", $.parseJSON(browserData), function(data){
+      console.log(data)
+      if(data.result.acknowledged == true){
+          localStorage.setItem("uid",data.user_id)
+      }
+  })    
     swal("Com et dius?:", {
         content: "input",
       })
       .then((value) => {
         document.getElementById("bafarada").innerHTML = ""
         escriure(`Hola ${value}! Benvingut a Escull la teva aventura. El joc es molt senzill: Jo et mostraré un fragment del llibre, i després de llegir-lo, tu hauràs d'escollir entre 2 (o més) opcions. Algunes d'aquestes opcions et revelaran finals alternatius, bons i dolents, i algunes altres opcions et permetran seguir amb el fil de la història. Estàs preparat? `, 50)
+        
+
         var start = async() =>{        
           await sleep(22000)
           console.log("test")
           var container = document.getElementById("bafarada")
-          var newData = `  <div class="switch">	
-          <input type="radio" name="choice" id="yes">
-          <label for="yes">Sí</label>
-          <input type="radio" name="choice" id="no">
-          <label for="no">No</label>
-          <span class="switchFilter"></span>
-        </div>
+          var newData = ` 
+            <div class="button-wrap">
+              <input class="hidden radio-label" type="radio" name="accept-offers" id="yes-button" checked="checked"/>
+              <label class="button-label" for="yes-button">
+                <h1>Sí</h1>
+              </label>
+              <input class="hidden radio-label" type="radio" name="accept-offers" id="no-button"/>
+              <label class="button-label" for="no-button">
+                <h1>No</h1>
+              </label>
+            </div>
       `
       container.innerHTML += newData
         }
         start()
+        setTimeout( function() {
+          gifs[0].click(); //will play the first gif
+        }, 22000);
+      
       });
     
 }

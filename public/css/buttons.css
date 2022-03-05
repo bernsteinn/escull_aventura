@@ -1,73 +1,75 @@
-.cd-switch {
-    padding: 50px 0;
-    text-align: center;
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,900);
+
+
+
+
+.button-wrap {
+  text-align: center;
+}
+@media (max-width: 40em) {
+  .button-wrap {
+    margin-top: -1.5em;
   }
-  
-  .switchFilter {
-    width: 0;
-    display: inline-block;
-    background-color: #DB6576;
-    position: absolute;
-    left: 0;
-    opacity: 0;
-    top: 0;
-    bottom: 0;
-    z-index: -1;
-    -webkit-transition: all 0.4s cubic-bezier(0, 0, 0.25, 1);
-    -moz-transition: all 0.4s cubic-bezier(0, 0, 0.25, 1);
-    transition: all 0.4s cubic-bezier(0, 0, 0.25, 1);
+}
+
+.button-label {
+  display: inline-block;
+  padding: 40px;
+  margin: 0.5em;
+  cursor: pointer;
+  color: #292929;
+  border-radius: 0.25em;
+  background: #efefef;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+  transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.button-label h1 {
+  font-size: 1em;
+  font-family: "Lato", sans-serif;
+}
+.button-label:hover {
+  background: #d6d6d6;
+  color: #101010;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
+}
+.button-label:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0px -1px 0 rgba(0, 0, 0, 0.22);
+}
+@media (max-width: 40em) {
+  .button-label {
+    padding: 0em 1em 3px;
+    margin: 0.25em;
   }
-  
-  label {
-    cursor: pointer;
-    text-transform: uppercase;
-    border: 1px solid #3D4349;
-    width: 85px;
-    padding: 15px 0;
-    text-align: center;
-    display: inline-block;
-    -webkit-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    transition: all 0.4s;
-    margin-right: 10px;
-  }
-  
-  .switch {
-    position: relative;
-    display: inline-block;
-    left: 50%;
-    right: auto;
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
-    z-index: 1;
-    margin: 2em 0;
-  }
-  .switch input[type=radio] {
-    visibility: hidden;
-    position: relative;
-    height: 100%;
-  }
-  .switch input[type=radio]#yes:checked ~ label[for=yes] {
-    color: white;
-    border: 1px solid #DB6576;
-  }
-  .switch input[type=radio]#yes:checked ~ .switchFilter {
-    left: 0;
-    opacity: 1;
-    width: 87px;
-  }
-  .switch input[type=radio]#no:checked ~ label[for=no] {
-    color: white;
-    border: 1px solid #DB6576;
-  }
-  .switch input[type=radio]#no:checked ~ .switchFilter {
-    left: 100px;
-    width: 87px;
-    opacity: 1;
-  }
+}
+
+#yes-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#yes-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+#no-button:checked + .button-label {
+  background: #D91E18;
+  color: #efefef;
+}
+#no-button:checked + .button-label:hover {
+  background: #c21b15;
+  color: #e2e2e2;
+}
+
+
+
+.hidden {
+  display: none;
+}
 
 #submit1, #submit2, #submit3, #submit4{
     position: relative;

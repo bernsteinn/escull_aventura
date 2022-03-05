@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/resources/js/gifffer.min.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -157,7 +158,7 @@
         <div id="output">
         <div class="bafarada bafarada-left" id="bafarada"><h1>Esperant una resposta...</h1>
         </div>
-        <img class="talker"src="/resources/img/happy.png">
+        <img class="talker"data-gifffer="/resources/img/happy.gif">
         <br><br><br>
     </div>
     <input id="1" type="button" hidden/>
@@ -197,6 +198,7 @@
       $(".content").css("opacity", "100%")
       run()
   }
+  precheck()
   progress()
   
       }

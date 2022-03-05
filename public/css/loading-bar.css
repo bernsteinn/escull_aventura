@@ -16,3 +16,10 @@
 .ldBar.no-percent .ldBar-label:after {
   content: "";
 }
+
+cache {
+  opacity: 0;
+  z-index: -1000;
+  position: absolute;
+  bottom: 200px;
+}
