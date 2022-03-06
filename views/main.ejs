@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="/resources/js/gifffer.min.js"></script>
+    <script src="/resources/js/topbar.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -130,9 +135,26 @@
   nav li a {
     transition: 0.5s color ease-in-out;
   }
-  
+  .blinking-cursor {
+    user-select: none;
+    animation: blink 1s steps(2, start) infinite;
+  }
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+
   .page-title {
     opacity: 0.75 !important;
+  }
+  #type-text{
+    color:white;
+    font-size: 20px;
+    padding: 10px;
+    margin: 5px;
+    position: relative ;
+    left: 10px;
   }
 </style>
 <body>
@@ -147,9 +169,8 @@
         </nav>  
         <div>
             <div class="page-title">
-              <h2>Escull la teva aventura</h2>
-              <p class="lead">
-              </p>
+              <span is="type-async" id="type-text"></span>
+              <span class="blinking-cursor">_</span>
             </div>
           </div>
         </div>
@@ -164,9 +185,11 @@
     <input id="1" type="button" hidden/>
     <input id="2" type="button" hidden/>
     <input id="3" type="button" hidden/>
-    <input id="submit1" type="button"  onclick="submit('#1')"/>
-    <input id="submit2" type="button"  onclick="submit('#2')"/>
-    <input id="submit3" type="button" value="El Lleó no mor" onclick="submit('#3')"/>
+    <div class="options">
+          <input id="submit1" class="submits" type="button"  onclick="submit('#1')"/>
+          <input id="submit2" class="submits" type="button"  onclick="submit('#2')"/>
+          <input id="submit3" class="submits" type="button"  onclick="submit('#3')"/>
+    </div>
 
     </div>
     <script type="module">
@@ -206,6 +229,7 @@
   </script>
   
     <script>
+      
         var option;
         function submit(id){
           val=$(id).val();
@@ -219,21 +243,52 @@
                   $('body').addClass("fallo");
                   $('body').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
                     $('body').delay(200).removeClass('fallo');
+                    setTimeout( function() {
+                    gifs[0].click(); 
+                  }, 200);
+
                     escriure(data.text, 50)
                     $("body").css("background-color", "rgb(255, 0, 0)")
                     document.getElementById("topbar").style.display = "none";
                     document.getElementById("topbar_border").style.display = "none"
+                    setTimeout( function() {
+                    gifs[0].click(); 
+                  }, 7000);
+
                   });
                   localStorage.removeItem("lvl")
                 }
                 else{
+                  setTimeout( function() {
+                    gifs[0].click(); 
+                  }, 200);
+
                   escriure(data.text, 50, true, next, 6000, data.lvl)
                   localStorage.setItem("lvl", data.lvl)
+                  setTimeout( function() {
+                    gifs[0].click(); //will play the first gif
+                  }, 6000);
+
                 }
             });
           }
         
-      
+          $(".submits").each(function(index, element){
+            var animation = TweenMax.to(this, 0.2, {
+              className: '+= superShadow',
+              marginTop: '-10px',
+              marginBottom: '10px',
+              ease: Power1.easeIn,
+              paused:true 
+            });
+            element.animation = animation;
+          })
+          $('.submits').hover(function(){
+            this.animation.play()
+          }, function(){
+            this.animation.reverse();
+          })
+
 
 </script>
 </html>

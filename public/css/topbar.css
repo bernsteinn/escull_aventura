@@ -93,6 +93,17 @@
     transition: 0.5s color ease-in-out;
   }
   
-  .page-title {
-    opacity: 0.75 !important;
+
+  .blinking-cursor {
+    user-select: none;
+    animation: blink 1s steps(2, start) infinite;
+  }
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  #type-text{
+    color: white;
   }

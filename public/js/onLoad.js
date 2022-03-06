@@ -1,6 +1,17 @@
 var gifs;
 window.onload = function() {
-  gifs = Gifffer();
+  gifs = Gifffer({playButtonStyles: {
+    'opacity': '0',
+    'width': '60px',
+    'height': '60px',
+    'border-radius': '30px',
+    'background': 'rgba(0, 0, 0, 0.3)',
+    'position': 'absolute',
+    'top': '50%',
+    'left': '50%',
+    'margin': '-30px 0 0 -30px'
+  }
+});
   setTimeout( function() {
     gifs[0].click(); //will play the first gif
   }, 1000);
@@ -65,7 +76,6 @@ function precheck(){
               cache.appendChild(ele);
           }
           $(`cache #${parent}`)[0].appendChild(img);
-          console.log(parent);
       }
   }
   var usid = localStorage.getItem("uid")
@@ -97,7 +107,10 @@ if(usid == null){
       .then((value) => {
         document.getElementById("bafarada").innerHTML = ""
         escriure(`Hola ${value}! Benvingut a Escull la teva aventura. El joc es molt senzill: Jo et mostraré un fragment del llibre, i després de llegir-lo, tu hauràs d'escollir entre 2 (o més) opcions. Algunes d'aquestes opcions et revelaran finals alternatius, bons i dolents, i algunes altres opcions et permetran seguir amb el fil de la història. Estàs preparat? `, 50)
-        
+        setTimeout( function() {
+          gifs[0].click(); 
+        }, 22000);
+
 
         var start = async() =>{        
           await sleep(22000)
@@ -118,9 +131,6 @@ if(usid == null){
       container.innerHTML += newData
         }
         start()
-        setTimeout( function() {
-          gifs[0].click(); //will play the first gif
-        }, 22000);
       
       });
     
@@ -141,6 +151,10 @@ else{
                   document.getElementById("1").value = data.op1_val
                   document.getElementById("2").value = data.op2_val
                   escriure(data.text, 50, false)
+                  setTimeout( function() {
+                    gifs[0].click(); 
+                  }, 7000);
+                
                 }
                 else if(data.opnum == 3){
                   document.getElementById("submit1").value = data.op_1
@@ -152,6 +166,10 @@ else{
                   document.getElementById("2").value = data.op2_val
                   document.getElementById("3").value = data.op3_val
                   escriure(data.text, 50, false)
+                  setTimeout( function() {
+                    gifs[0].click(); 
+                  }, 7000);
+                
                 }
 
               })  
@@ -203,6 +221,11 @@ function update(){
                 document.getElementById("1").value = data.op1_val
                 document.getElementById("2").value = data.op2_val
                 escriure(data.text, 50, false)
+                setTimeout( function() {
+                  gifs[0].click(); 
+                }, 8000);
+
+                
               }
               else if(data.opnum == 3){
                 document.getElementById("submit1").value = data.op_1
@@ -214,6 +237,11 @@ function update(){
                 document.getElementById("2").value = data.op2_val
                 document.getElementById("3").value = data.op3_val
                 escriure(data.text, 50, false)
+                gifs[0].click(); 
+                setTimeout( function() {
+                  gifs[0].click(); 
+                }, 8000);
+
               }
           })
       }
