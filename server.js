@@ -5,12 +5,14 @@ const bcryptjs = require('bcryptjs')
 const bodyParser = require("body-parser")
 const MongoClient = require("mongodb").MongoClient
 const socket = require("socket.io"); //TODO: implement socket.io cause it's cool and I like it.
+const exp = require("constants");
 
 
 var url = "mongodb://192.168.100.192:27017/escull_aventura";
 const app = express()
 //---All modules used by express and express-session
 app.use(express.json())
+app.use('/favicon.ico', express.static(__dirname + '/public/img/favicon.ico'))
 app.use('/resources', express.static('public'))
 app.use( express.static(__dirname + '/public'))
 app.set('view engine', 'ejs');
@@ -137,6 +139,12 @@ app.post("/users", (req,res)=>{
           }); 
     }
 
+})
+app.get("/favicon.ico", (req,res)=>{
+    res.send
+})
+app.get("*", (req,res)=>{
+    res.render("404")
 })
 
 http.createServer(app).listen(8090);
