@@ -106,8 +106,16 @@ if(usid == null){
         content: "input",
       })
       .then((value) => {
-        document.getElementById("bafarada").innerHTML = ""
-        escriure(`Hola ${value}! Benvingut a Escull la teva aventura. El joc es molt senzill: Jo et mostraré un fragment del llibre, i després de llegir-lo, tu hauràs d'escollir entre 2 (o més) opcions. Algunes d'aquestes opcions et revelaran finals alternatius, bons i dolents, i algunes altres opcions et permetran seguir amb el fil de la història. Estàs preparat? `, 50)
+        $.get(`https://gender-api.com/get?name=${value}&key=nLYBKXedCdLPNuUU3tKrwmCl29mqf4Mm3msJ`, function(data){
+          if(data.gender == "female"){
+            document.getElementById("bafarada").innerHTML = ""
+            escriure(`Hola ${value}! Benvinguda a Escull la teva aventura. El joc es molt senzill: Jo et mostraré un fragment del llibre, i després de llegir-lo, tu hauràs d'escollir entre 2 (o més) opcions. Algunes d'aquestes opcions et revelaran finals alternatius, bons i dolents, i algunes altres opcions et permetran seguir amb el fil de la història. Estàs preparada? `, 50)
+          }
+          else{
+            document.getElementById("bafarada").innerHTML = ""
+            escriure(`Hola ${value}! Benvingut a Escull la teva aventura. El joc es molt senzill: Jo et mostraré un fragment del llibre, i després de llegir-lo, tu hauràs d'escollir entre 2 (o més) opcions. Algunes d'aquestes opcions et revelaran finals alternatius, bons i dolents, i algunes altres opcions et permetran seguir amb el fil de la història. Estàs preparat? `, 50)
+          }
+        })
         setTimeout( function() {
           gifs[0].click(); 
         }, 19600);
