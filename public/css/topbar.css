@@ -1,109 +1,66 @@
-.hoverable {
-    display: inline-block;
-    backface-visibility: hidden;
-    vertical-align: middle;
-    position: relative;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    tranform: translateZ(0);
-    transition-duration: 0.3s;
-    transition-property: transform;
-  }
-  
-  .hoverable:before {
-    position: absolute;
-    pointer-events: none;
-    z-index: -1;
-    content: "";
-    top: 100%;
-    left: 5%;
-    height: 10px;
-    width: 90%;
-    opacity: 0;
-    background: -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
-    /* W3C */
-    transition-duration: 0.3s;
-    transition-property: transform, opacity;
-  }
-  
-  .hoverable:hover, .hoverable:active, .hoverable:focus {
-    transform: translateY(-5px);
-  }
-  
-  .hoverable:hover:before, .hoverable:active:before, .hoverable:focus:before {
-    opacity: 1;
-    transform: translateY(-5px);
-  }
-  
-  @keyframes bounce-animation {
-    16.65% {
-      -webkit-transform: translateY(8px);
-      transform: translateY(8px);
-    }
-    33.3% {
-      -webkit-transform: translateY(-6px);
-      transform: translateY(-6px);
-    }
-    49.95% {
-      -webkit-transform: translateY(4px);
-      transform: translateY(4px);
-    }
-    66.6% {
-      -webkit-transform: translateY(-2px);
-      transform: translateY(-2px);
-    }
-    83.25% {
-      -webkit-transform: translateY(1px);
-      transform: translateY(1px);
-    }
-    100% {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-    }
-  }
-  .bounce {
-    animation-name: bounce-animation;
-    animation-duration: 2s;
-  }
-  
-  /*everything below here is just setting up the page, so dont worry about it */
-  @media (min-width: 768px) {
-    .navbar {
-      text-align: center !important;
-      float: none;
-      display: inline-block;
-    }
-  }
-  body {
-    background-color: black;
-    font-weight: 600;
-    text-align: center !important;
-    color: white;
-  }
-  
-  nav {
-    background: none !important;
-    text-transform: uppercase;
-  }
-  nav li {
-    margin-left: 3em;
-    margin-right: 3em;
-  }
-  nav li a {
-    transition: 0.5s color ease-in-out;
-  }
-  
+:root {
+  --clr-neon: hsl(317 100% 54%);
+  --clr-bg: hsl(323 21% 16%);
+}
 
-  .blinking-cursor {
-    user-select: none;
-    animation: blink 1s steps(2, start) infinite;
-  }
-  @keyframes blink {
-    to {
-      visibility: hidden;
-    }
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-  #type-text{
-    color: white;
-  }
+
+.neon-button {
+  cursor: pointer;
+  text-decoration: none;
+  border: var(--clr-neon) 0.125em solid;
+  padding: 0.25em 1em;
+  border-radius: 0.25em;
+  text-shadow: 0 0 0.125em rgba(255, 255, 255, 0.3), 0 0 0.45em currentColor;
+  box-shadow: inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon);
+  position: relative;
+}
+
+.neon-button::before {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  background: var(--clr-neon);
+  top: 120%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+  filter: blur(1em);
+  opacity: 0.7;
+}
+
+.neon-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 0 2em 0.5em var(--clr-neon);
+  opacity: 0;
+  background-color: var(--clr-neon);
+  z-index: -1;
+  transition: opacity 100ms linear;
+}
+
+.neon-button:hover,
+.neon-button:focus {
+  color: var(--clr-bg);
+  text-shadow: none;
+}
+
+.neon-button:hover::before,
+.neon-button:focus::before {
+  opacity: 1;
+}
+
+.neon-button:hover::after,
+.neon-button:focus::after {
+  opacity: 1;
+}

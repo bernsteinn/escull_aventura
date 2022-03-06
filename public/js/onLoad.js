@@ -80,9 +80,9 @@ function precheck(){
   }
   var usid = localStorage.getItem("uid")
 if(usid == null){
-    document.getElementById("submit1").style.visibility = "hidden"
-    document.getElementById("submit2").style.visibility = "hidden"
-    document.getElementById("submit3").style.visibility = "hidden"
+    document.getElementById("submit1").style.display = "none"
+    document.getElementById("submit2").style.display = "none"
+    document.getElementById("submit3").style.display = "none"
     console.log("nou usuari")
     images("/resources/img/happy.gif")
     
@@ -99,6 +99,7 @@ if(usid == null){
       console.log(data)
       if(data.result.acknowledged == true){
           localStorage.setItem("uid",data.user_id)
+          localStorage.setItem("lvl",1)
       }
   })    
     swal("Com et dius?:", {
@@ -109,16 +110,16 @@ if(usid == null){
         escriure(`Hola ${value}! Benvingut a Escull la teva aventura. El joc es molt senzill: Jo et mostraré un fragment del llibre, i després de llegir-lo, tu hauràs d'escollir entre 2 (o més) opcions. Algunes d'aquestes opcions et revelaran finals alternatius, bons i dolents, i algunes altres opcions et permetran seguir amb el fil de la història. Estàs preparat? `, 50)
         setTimeout( function() {
           gifs[0].click(); 
-        }, 22000);
+        }, 19600);
 
 
         var start = async() =>{        
-          await sleep(22000)
+          await sleep(20000)
           console.log("test")
           var container = document.getElementById("bafarada")
           var newData = ` 
             <div class="button-wrap">
-              <input class="hidden radio-label" type="radio" name="accept-offers" id="yes-button" checked="checked"/>
+              <input class="hidden radio-label" type="radio" name="accept-offers" id="yes-button" onclick="update()" checked="checked"/>
               <label class="button-label" for="yes-button">
                 <h1>Sí</h1>
               </label>
@@ -144,19 +145,26 @@ else{
         var currentLevel = `{"lvl":${data.lvl}}`
             $.post("/seg", $.parseJSON(currentLevel), function(data){
                 if(data.opnum == 2){
+                  $("#submit1").fadeIn(1500)
+                  $("#submit2").fadeIn(1500)
+                  $(".options").fadeIn(1500)
                   document.getElementById("submit1").value = data.op_1
                   document.getElementById("submit2").value = data.op_2
-                  document.getElementById("submit3").style.visibility = "hidden";
+                  document.getElementById("submit3").style.display = "none";
                   document.title = data.title
                   document.getElementById("1").value = data.op1_val
                   document.getElementById("2").value = data.op2_val
                   escriure(data.text, 50, false)
                   setTimeout( function() {
                     gifs[0].click(); 
-                  }, 7000);
+                  },data.time);
                 
                 }
                 else if(data.opnum == 3){
+                  $("#submit1").fadeIn(1500)
+                  $("#submit2").fadeIn(1500)
+                  $("#submit3").fadeIn(1500)
+                  $(".options").fadeIn(1500)
                   document.getElementById("submit1").value = data.op_1
                   document.getElementById("submit2").value = data.op_2
                   document.getElementById("submit3").style.visibility = "visible";
@@ -168,7 +176,7 @@ else{
                   escriure(data.text, 50, false)
                   setTimeout( function() {
                     gifs[0].click(); 
-                  }, 7000);
+                  }, data.time);
                 
                 }
 
@@ -205,6 +213,12 @@ function next(lvl){
     }
 }
 function update(){
+  document.getElementById("submit1").style.display = "none";
+  document.getElementById("submit2").style.display = "none";
+  document.getElementById("submit3").style.display = "none";
+  document.getElementById("submit1").style.boxShadow = "inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon)"
+  document.getElementById("submit2").style.boxShadow = "inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon)"
+  document.getElementById("submit3").style.boxShadow = "inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon)"
     var lvl = localStorage.getItem("lvl")
     var currentLevel = `{"lvl":${lvl}}`
     var user_id = localStorage.getItem("uid")
@@ -214,23 +228,27 @@ function update(){
 
             })
             if(data.opnum == 2){
+                gifs[0].click()
                 document.getElementById("submit1").value = data.op_1
                 document.getElementById("submit2").value = data.op_2
-                document.getElementById("submit3").style.visibility = "hidden";
+                document.getElementById("submit3").style.display = "none"
                 document.title = data.title
                 document.getElementById("1").value = data.op1_val
                 document.getElementById("2").value = data.op2_val
                 escriure(data.text, 50, false)
                 setTimeout( function() {
+                  $("#submit1").fadeIn(1500)
+                  $("#submit2").fadeIn(1500)  
+                  $(".options").fadeIn(1500)
                   gifs[0].click(); 
-                }, 8000);
+                }, data.time);
 
                 
               }
               else if(data.opnum == 3){
                 document.getElementById("submit1").value = data.op_1
                 document.getElementById("submit2").value = data.op_2
-                document.getElementById("submit3").style.visibility = "visible";
+                document.getElementById("submit3").style.display = "none"
                 document.getElementById("submit3").value = data.op_3
                 document.title = data.title
                 document.getElementById("1").value = data.op1_val
@@ -240,9 +258,14 @@ function update(){
                 gifs[0].click(); 
                 setTimeout( function() {
                   gifs[0].click(); 
-                }, 8000);
+                  $("#submit1").fadeIn(1500)
+                  $("#submit2").fadeIn(1500)
+                  $("#submit3").fadeIn(1500)
+                  $(".options").fadeIn(1500)
+                }, data.time);
 
               }
           })
       }
+
   

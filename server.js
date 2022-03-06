@@ -45,26 +45,54 @@ app.post('/api', (req,res) =>{
     const option = req.body.val
     if(lvl == 1){
         if(option == 'op_1'){
-            res.send({text:"Exit! Has aconseguit passar al seguent nivell. El LLeó mor i la historia segueix normalment.", title:"Escull la teva aventura | 1", status:true, case:"exit",lvl:2})
+            res.send({time:3000,text:"Exit! Has aconseguit passar al seguent nivell. El LLeó mor i la historia segueix normalment.", title:"Escull la teva aventura | 1", status:true, case:"exit",lvl:2})
         }
         else if(option == 'op_2'){
-            res.send({text:"El te que el Gregor li porta al Lleó, se'l beu la Júlia. Quan la Júlia es mor, el Lleó cau en depressió i s'acaba suicidant. Final fatídic. ", title:"Escull la teva aventura | 1", status:true, case:"fallo"})
+            res.send({time:6000,text:"El te que el Gregor li porta al Lleó, se'l beu la Júlia. Quan la Júlia es mor, el Lleó cau en depressió i s'acaba suicidant. Final fatídic. ", title:"Escull la teva aventura | 1", status:true, case:"fallo"})
         }
         else{
-            res.send({text:"Error! Alguna cosa no ha anat bé. Torna-ho a provar.", title:"Escull la teva aventura | Error", status:false, case:"error"})
+            res.send({time:0,text:"Error! Alguna cosa no ha anat bé. Torna-ho a provar.", title:"Escull la teva aventura | Error", status:false, case:"error"})
         }
     }
+    else if(lvl == 2 ){
+        if(option == 'op_1'){
+            res.send({time:3000,text:"Ha mort de vell... Descansi en pau", title:"Escull la teva aventura | 2", status:true, case:"exit",lvl:3})
+        }
+        else if(option == 'op_2'){
+            res.send({time:6000,text:"El Gregor l'ha enverinat, de part dels fills.", title:"Escull la teva aventura | 1", status:true, case:"fallo"})
+        }
+
+    }
+    else if(lvl == 3 ){
+        
+    }
+    else if(lvl == 4 ){
+        
+    }
+    else if(lvl == 5 ){
+        
+    }
+    else if(lvl == 6 ){
+        
+    }
+    else if(lvl == 7 ){
+        
+    }
+    else if(lvl == 8 ){
+        
+    }
+
     else{
-        res.send({text:"Error", title:"Error", status:true, case:"error"})
+        res.send({time:0,text:"Error", title:"Error", status:true, case:"error"})
     }
 })
 app.post("/seg", (req,res)=>{
     const lvl = req.body.lvl
     if(lvl == 1){
-            res.send({lvl:1,text:"Molt bé, començem. A l'inici de la historia, el Lleó, l'avi de la Júlia, es mor. Creus que es el camí correcte o tu ho faries diferent?", title:"Escull la teva aventura | 1", op_1:"El Lleó es mor", op_2:"El Lleó no es mor", op1_val:'{"lvl":1, "val":"op_1"}', op2_val:'{"lvl":1, "val":"op_2"}',opnum:2})
+            res.send({time:8000,lvl:1,text:"Molt bé, començem. A l'inici de la historia, el Lleó, l'avi de la Júlia, es mor. Creus que es el camí correcte o tu ho faries diferent?", title:"Escull la teva aventura | 1", op_1:"El Lleó es mor", op_2:"El Lleó no es mor", op1_val:'{"lvl":1, "val":"op_1"}', op2_val:'{"lvl":1, "val":"op_2"}',opnum:2})
     }
     if(lvl == 2){
-        res.send({lvl:2,text:"El Lleó mor el dia que la Júlia fa 18 anys, com creus que ha mort el Lleó?", op_1:"Ha mort de vell.", op_2:"Ha mort asassinat per algú.", op_3:"Ha mort per una sobredosis", title:"Escull la teva aventura | 2", opnum:3, op1_val:'{"lvl":2, "val":"op_1"}',op2_val:'{"lvl":2, "val":"op_2"}', op3_val:'{"lvl":2, "val":"op_3"}'})
+        res.send({time:5000 ,lvl:2,text:"El Lleó mor el dia que la Júlia fa 18 anys, com creus que ha mort el Lleó?", op_1:"Ha mort de vell.", op_2:"Ha mort asassinat per algú.", op_3:"Ha mort per una sobredosis", title:"Escull la teva aventura | 2", opnum:3, op1_val:'{"lvl":2, "val":"op_1"}',op2_val:'{"lvl":2, "val":"op_2"}', op3_val:'{"lvl":2, "val":"op_3"}'})
     }
 })
 app.post("/users", (req,res)=>{

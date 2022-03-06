@@ -17,6 +17,7 @@
     <link rel='stylesheet' href='/resources/css/fallo.css'>
     <link rel='stylesheet' href="/resources/css/seguent.css">
     <link rel='stylesheet' href="/resources/css/animate.css">
+    <link rel='stylesheet' href="/resources/css/topbar.css">
     <script src="resources/js/onLoad.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1"><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    
@@ -155,6 +156,12 @@
     margin: 5px;
     position: relative ;
     left: 10px;
+    font-family: topText;
+  }
+
+  @font-face{
+    font-family: topText;
+    src:url(/resources/css/Quikhand.ttf)
   }
 </style>
 <body>
@@ -186,9 +193,9 @@
     <input id="2" type="button" hidden/>
     <input id="3" type="button" hidden/>
     <div class="options">
-          <input id="submit1" class="submits" type="button"  onclick="submit('#1')"/>
-          <input id="submit2" class="submits" type="button"  onclick="submit('#2')"/>
-          <input id="submit3" class="submits" type="button"  onclick="submit('#3')"/>
+          <input id="submit1" class="submits neon-button" type="button"  onclick="submit('#1')" style="display: none;"/>
+          <input id="submit2" class="submits neon-button" type="button"  onclick="submit('#2')" style="display: none;"/>
+          <input id="submit3" class="submits neon-button" type="button"  onclick="submit('#3')" style="display: none;"/>
     </div>
 
     </div>
@@ -267,7 +274,7 @@
                   localStorage.setItem("lvl", data.lvl)
                   setTimeout( function() {
                     gifs[0].click(); //will play the first gif
-                  }, 6000);
+                  }, data.time);
 
                 }
             });
@@ -289,6 +296,21 @@
             this.animation.reverse();
           })
 
+          $("#submit1").click(function(){
+            $("#submit2").fadeOut()
+            $("#submit3").fadeOut()
+            document.getElementById("submit1").style.boxShadow = "inset 0 0 0.5em 0 hsl(129.4, 100%, 53.9%), 0 0 0.5em 0 hsl(61.8, 100%, 53.9%)"
+          })
+          $("#submit2").click(function(){
+            $("#submit1").fadeOut()
+            $("#submit3").fadeOut()     
+            document.getElementById("submit2").style.boxShadow = "inset 0 0 0.5em 0 hsl(129.4, 100%, 53.9%), 0 0 0.5em 0 hsl(61.8, 100%, 53.9%)"
+          })
+          $("#submit3").click(function(){
+            $("#submit1").fadeOut()
+            $("#submit2").fadeOut() 
+            document.getElementById("submit3").style.boxShadow = "inset 0 0 0.5em 0 hsl(129.4, 100%, 53.9%), 0 0 0.5em 0 hsl(61.8, 100%, 53.9%)"
+          })
 
 </script>
 </html>
