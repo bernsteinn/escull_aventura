@@ -64,3 +64,24 @@
 .neon-button:focus::after {
   opacity: 1;
 }
+
+#image{
+  position: absolute;
+
+}
+@media  screen and (min-width: 400px) {
+  #image{}
+}
+@media  screen and (min-width: 720px) {
+  #image{}
+}
+@media  screen and (min-width: 1300px) {
+  #image{left:200px;top:300px;}
+}
+@media  screen and (min-width: 1600px) {
+  #image{left:100px;top:300px;}
+}
+
+@media  screen and (min-width: 1920px) {
+  #image{left:200px;top:300px;}
+}

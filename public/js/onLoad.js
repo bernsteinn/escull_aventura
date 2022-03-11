@@ -175,6 +175,7 @@ else{
         var currentLevel = `"lvl":${data.lvl}`
         var progress = "{"+currentLevel+","+dataResponses+"}"
             $.post("/seg", $.parseJSON(progress), function(data){
+              $("#image").attr("src", data.img)
                 if(data.opnum == 2){
                   $("#submit1").fadeIn(1500)
                   $("#submit2").fadeIn(1500)
@@ -243,7 +244,10 @@ function next(lvl){
 
     }
 }
-function update(){
+function update(option){
+	if(option == 2){
+	$("#lose").empty()
+}
   var lvl = localStorage.getItem("lvl") - 1
   if(lvl == 1){
     var dataResponses = ""+'"'+'lvl1'+'"'+":"+localStorage.getItem("lvl1response")
@@ -281,6 +285,7 @@ function update(){
     console.log (option)
     var user_id = localStorage.getItem("uid")
         $.post("/seg", $.parseJSON(option), function(data){
+          $("#image").attr("src", data.img)
             var browserData = `{"lvl":"${lvl}", "update":true, "uid":"${user_id}"}`
             $.post("/users", $.parseJSON(browserData), function(data){
 
@@ -371,13 +376,18 @@ function update(){
         container.innerHTML += animation
         setTimeout(function(){
           localStorage.setItem("lvl",1)
-        Swal.fire({
+	localStorage.removeItem("lvl1response")
+localStorage.removeItem("lvl2response")
+localStorage.removeItem("lvl3response")
+localStorage.removeItem("lvl4response")
+localStorage.removeItem("lvl5response")        
+Swal.fire({
           title: '<h2><b>Has perdut</b></h2>',
           icon: 'info',
           html:
             'Vols intentar-ho una altra vegada? ' +
             `<div class="wrapper">
-    <a class="cta" href="#" onclick="update()">
+    <a class="cta" href="#" onclick="update(2)">
       <span>Torna-ho a provar</span>
       <span>
         <svg width="20px" height="20px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
