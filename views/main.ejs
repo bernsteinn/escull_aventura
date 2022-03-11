@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/x-icon" href="/resources/img/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/magnific-popup.css">
+    <link rel="stylesheet" href="/resources/css/lose.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -20,11 +22,13 @@
     <link rel='stylesheet' href="/resources/css/animate.css">
     <link rel='stylesheet' href="/resources/css/topbar.css">
     <script src="resources/js/onLoad.js"></script>
+    <script src="/resources/js/jquery.magnific-popup.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1"><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    
     <link rel="stylesheet" type="text/css" href="/resources/css/loading-bar.css"/>
     <script type="text/javascript" src="/resources/js/loading-bar.js"></script>
     <link rel="stylesheet" href="/resources/css/buttons.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
   </head>
 <script>
@@ -166,6 +170,7 @@
   }
 </style>
 <body>
+  <div class="lose" id="lose"></div>
     <div class="container-fluid">
         <nav class="navbar navbar-inverse" id="topbar_border">
           <div class="container-fluid" id="topbar">
@@ -182,6 +187,7 @@
             </div>
           </div>
         </div>
+        <a id="pop-container"></a>
         <div class="barra label-center" data-value="Iniciant..." style="width: 100%; height: 60px; position: relative;"></div>  
         <div class="content" style="opacity: 0%;">
         <div id="output">
@@ -194,9 +200,9 @@
     <input id="2" type="button" hidden/>
     <input id="3" type="button" hidden/>
     <div class="options">
-          <input id="submit1" class="submits neon-button" type="button"  onclick="submit('#1')" style="display: none;"/>
-          <input id="submit2" class="submits neon-button" type="button"  onclick="submit('#2')" style="display: none;"/>
-          <input id="submit3" class="submits neon-button" type="button"  onclick="submit('#3')" style="display: none;"/>
+          <input id="submit1" class="submits neon-button" type="button"  onclick="submit('#1', 1)" style="display: none;"/>
+          <input id="submit2" class="submits neon-button" type="button"  onclick="submit('#2', 2)" style="display: none;"/>
+          <input id="submit3" class="submits neon-button" type="button"  onclick="submit('#3', 3)" style="display: none;"/>
     </div>
 
     </div>
@@ -235,43 +241,124 @@
       }
       loading()
   </script>
-  
     <script>
       
         var option;
-        function submit(id){
+        function submit(id, num){
           val=$(id).val();
-          option = $.parseJSON(val)
+          var lvl = localStorage.getItem("lvl")
+          switch(num){
+            case 1:
+              if(localStorage.getItem("lvl") == 1){
+                localStorage.setItem("lvl1response", 1)
+              }
+              if(localStorage.getItem("lvl") == 2){
+                localStorage.setItem("lvl2response", 1)
+              }
+              if(localStorage.getItem("lvl") == 3){
+                localStorage.setItem("lvl3response", 1)
+
+              }
+              if(localStorage.getItem("lvl") == 4){
+                localStorage.setItem("lvl4response", 1)
+
+              }
+              if(localStorage.getItem("lvl") == 5){
+                localStorage.setItem("lvl5response", 1)
+
+              }
+              break
+
+            case 2:
+            if(localStorage.getItem("lvl") == 1){
+                localStorage.setItem("lvl1response", 2)
+              }
+              if(localStorage.getItem("lvl") == 2){
+                localStorage.setItem("lvl2response", 2)
+              }
+              if(localStorage.getItem("lvl") == 3){
+                localStorage.setItem("lvl3response", 2)
+
+              }
+              if(localStorage.getItem("lvl") == 4){
+                localStorage.setItem("lvl4response", 2)
+
+              }
+              if(localStorage.getItem("lvl") == 5){
+                localStorage.setItem("lvl5response", 2)
+
+              }
+              break
+
+            case 3:
+            if(localStorage.getItem("lvl") == 1){
+                localStorage.setItem("lvl1response", 3)
+              }
+              if(localStorage.getItem("lvl") == 2){
+                localStorage.setItem("lvl2response", 3)
+              }
+              if(localStorage.getItem("lvl") == 3){
+                localStorage.setItem("lvl3response", 3)
+
+              }
+              if(localStorage.getItem("lvl") == 4){
+                localStorage.setItem("lvl4response", 3)
+
+              }
+              if(localStorage.getItem("lvl") == 5){
+                localStorage.setItem("lvl5response", 3)
+
+              }
+              break
+             
+          }
+          if(lvl == 1){
+            var dataResponses = ""+'"'+'lvl1'+'"'+":"+localStorage.getItem("lvl1response")
+          }
+          else if(lvl == 2){
+            var dataResponses = ""+'"'+'lvl1'+'"'+":"+localStorage.getItem("lvl1response")+',"lvl2":'+localStorage.getItem("lvl2response")
+          }
+          else if(lvl == 3){
+            var dataResponses = ""+'"'+'lvl1'+'"'+":"+localStorage.getItem("lvl1response")+',"lvl2":'+localStorage.getItem("lvl2response")+',"lvl3":'+localStorage.getItem("lvl3response")
+          }
+          else if(lvl == 4){
+            var dataResponses = ""+'"'+'lvl1'+'"'+":"+localStorage.getItem("lvl1response")+',"lvl2":'+localStorage.getItem("lvl2response")+',"lvl3":'+localStorage.getItem("lvl3response")+',"lvl4":'+localStorage.getItem("lvl4response")
+          }
+          else if(lvl == 5){
+            var dataResponses = ""+'"'+'lvl1'+'"'+":"+localStorage.getItem("lvl1response")+',"lvl2":'+localStorage.getItem("lvl2response")+',"lvl3":'+localStorage.getItem("lvl3response")+',"lvl4":'+localStorage.getItem("lvl4response")+',"lvl5":'+localStorage.getItem("lvl5response")
+          }
+          else{
+            var dataResponses = '{"wrong":"wrong"}'
+          }
+          var option = '{'+dataResponses+','+val+'}'
           console.log(option)
-          $.post("/api",option, function(data){
+          $.post("/api",$.parseJSON(option), function(data){
               if(data.status){
                 document.title = data.title              
               }
                 if(data.case == "fallo"){
-                  $('body').addClass("fallo");
-                  $('body').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
-                    $('body').delay(200).removeClass('fallo');
+                  youLost()
                     setTimeout( function() {
                     gifs[0].click(); 
                   }, 200);
 
                     escriure(data.text, 50)
-                    $("body").css("background-color", "rgb(255, 0, 0)")
-                    document.getElementById("topbar").style.display = "none";
-                    document.getElementById("topbar_border").style.display = "none"
                     setTimeout( function() {
                     gifs[0].click(); 
-                  }, 7000);
+                  }, data.time);
 
-                  });
+                  
                   localStorage.removeItem("lvl")
+                  var update = `{"update":"true", "lvl": 1, "uid": "${localStorage.getItem("uid")}"}`
+                  $.post("/users", $.parseJSON(update))
+                  window.title = "Has perdut | Escull la teva aventura"
                 }
                 else{
                   setTimeout( function() {
                     gifs[0].click(); 
                   }, 200);
 
-                  escriure(data.text, 50, true, next, 6000, data.lvl)
+                  escriure(data.text, 50, true, next, data.time, data.lvl)
                   localStorage.setItem("lvl", data.lvl)
                   setTimeout( function() {
                     gifs[0].click(); //will play the first gif

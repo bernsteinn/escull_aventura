@@ -114,7 +114,6 @@ body {
 	line-height: 1;
 	color: var(--color-link);
 }
-
 .js .loading::before,
 .js .loading::after {
 	opacity: 1;

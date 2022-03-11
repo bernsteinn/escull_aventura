@@ -88,14 +88,14 @@
   .options{width: 300px;height: 100px;position: relative;left: 800px;bottom: 450px;grid-gap: 50px;}
 }
 @media  screen and (min-width: 1300px) {
-  .options{}
+  .options{position: relative; left: 850px;grid-gap:50px;}
 }
 @media  screen and (min-width: 1600px) {
-  .options{}
+  .options{position: relative;left: 1000px;grid-gap: 75px;}
 }
 
 @media  screen and (min-width: 1920px) {
-  .options{}
+  .options{position: relative;left:1250px;grid-gap: 100px;}
 }
 
 #submit1, #submit2, #submit3, #submit4{

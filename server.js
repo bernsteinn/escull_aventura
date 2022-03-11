@@ -1,4 +1,6 @@
 var express = require("express")
+var https = require("https")
+var fs = require("fs")
 var http  = require("http")
 const session = require('express-session'); //To store the session variables
 const bcryptjs = require('bcryptjs')
@@ -47,10 +49,10 @@ app.post('/api', (req,res) =>{
     const option = req.body.val
     if(lvl == 1){
         if(option == 'op_1'){
-            res.send({time:3000,text:"Exit! Has aconseguit passar al seguent nivell. El LLeó mor i la historia segueix normalment.", title:"Escull la teva aventura | 1", status:true, case:"exit",lvl:2})
+            res.send({time:3000,text:"El LLeó mor i la historia segueix normalment.", title:"Escull la teva aventura | 1", status:true, case:"exit",lvl:2})
         }
         else if(option == 'op_2'){
-            res.send({time:6000,text:"El te que el Gregor li porta al Lleó, se'l beu la Júlia. Quan la Júlia es mor, el Lleó cau en depressió i s'acaba suicidant. Final fatídic. ", title:"Escull la teva aventura | 1", status:true, case:"fallo"})
+            res.send({time:6000,text:"El te que el Gregor li porta al Lleó, se'l beu la Júlia. Quan la Júlia es mor, el Lleó cau en depressió i s'acaba suicidant.", title:"Escull la teva aventura | 1", status:true, case:"fallo"})
         }
         else{
             res.send({time:0,text:"Error! Alguna cosa no ha anat bé. Torna-ho a provar.", title:"Escull la teva aventura | Error", status:false, case:"error"})
@@ -58,17 +60,36 @@ app.post('/api', (req,res) =>{
     }
     else if(lvl == 2 ){
         if(option == 'op_1'){
-            res.send({time:3000,text:"Ha mort de vell... Descansi en pau", title:"Escull la teva aventura | 2", status:true, case:"exit",lvl:3})
+            res.send({time:15000,text:"El Lleó anava caminant pel carrer, després d'acabar la seva jornada laboral i tancar la rellotjeria. Estava menjant un croissant de xocolata i de cop i volta va començar a tossir i a tossir fins que va caure al terra.", title:"Escull la teva aventura | 2", status:true, case:"exit",lvl:3})
         }
         else if(option == 'op_2'){
-            res.send({time:6000,text:"El Gregor l'ha enverinat, de part dels fills.", title:"Escull la teva aventura | 1", status:true, case:"fallo"})
+            res.send({time:6000,text:"El Gregor li ha donat un té enverinat de part dels fills.", title:"Escull la teva aventura | 2", status:true, case:"fallo"})
         }
+        else if(option == 'op_3'){
+            res.send({time:3000,text:"El Lleó té...", title:"Escull la teva aventura | 2", status:true, case:"exit",lvl:4})
+        }
+
 
     }
     else if(lvl == 3 ){
+        if(option == 'op_1' && req.body.lvl2 == 1){
+            res.send({time:24000,text:"Al posar-se a cridar va alertar a la policia, que la va tranquilitzar. La Júlia anava repetint que aquell era el seu avi, però els policies no van aconseguir trobar cap informació que els vinculés, així que se la van emportar a la comissaria amb ells. Després de moltes disputes, la Júlia va sortir de comissaria, tot i que no va descobrir mai perquè els policies li deien que no podia ser, que aquell no era el seu avi.", title:"Escull la teva aventura | 2", status:true, case:"fallo",lvl:4})
+        }
+        else if(option == 'op_2' && req.body.lvl2 == 2){
+            res.send({time:3000,text:"Algú mata al Lleó d'una manera molt subtil.", title:"Escull la teva aventura | 2", status:true, case:"exit",lvl:4})
+        }
+        else if(option == 'op_1' && req.body.lvl2 == 3){
+            res.send({time:27000,text:"Després d'acabar el seu horari laboral i tancar la rellotgeria, el Lleó va anar al seu bar de confiança on ell berenava sempre. Aquell dia tenia molta gana. Va menjar 12 croissants, 4 begudes energètiques i un bol de maduixes amb nata. Al cap de 20 minuts es va desmaiar mentres llegia el diari del bar, i ja no hi va haver marxa enrere. Després de enterar-se'n, la Júlia estava tant impactada que va decidir anar-se'n a Irlanda i començar una nova vida.", status:true, case:"fallo",lvl:5})
+        }
+
+
+
         
     }
     else if(lvl == 4 ){
+        if(option == 'op_2'){
+
+        }
         
     }
     else if(lvl == 5 ){
@@ -89,12 +110,33 @@ app.post('/api', (req,res) =>{
     }
 })
 app.post("/seg", (req,res)=>{
+    console.log(req.body)
     const lvl = req.body.lvl
     if(lvl == 1){
-            res.send({time:8000,lvl:1,text:"Molt bé, començem. A l'inici de la historia, el Lleó, l'avi de la Júlia, es mor. Creus que es el camí correcte o tu ho faries diferent?", title:"Escull la teva aventura | 1", op_1:"El Lleó es mor", op_2:"El Lleó no es mor", op1_val:'{"lvl":1, "val":"op_1"}', op2_val:'{"lvl":1, "val":"op_2"}',opnum:2})
+            res.send({time:8000,lvl:1,text:"Molt bé, començem. A l'inici de la historia, el Lleó, l'avi de la Júlia, es mor. Creus que es el camí correcte o tu ho faries diferent?", title:"Escull la teva aventura | 1", op_1:"El Lleó es mor", op_2:"El Lleó no es mor", op1_val:'"lvl":1, "val":"op_1"', op2_val:'"lvl":1, "val":"op_2"',opnum:2})
     }
     if(lvl == 2){
-        res.send({time:5000 ,lvl:2,text:"El Lleó mor el dia que la Júlia fa 18 anys, com creus que ha mort el Lleó?", op_1:"Ha mort de vell.", op_2:"Ha mort asassinat per algú.", op_3:"Ha mort per una sobredosis", title:"Escull la teva aventura | 2", opnum:3, op1_val:'{"lvl":2, "val":"op_1"}',op2_val:'{"lvl":2, "val":"op_2"}', op3_val:'{"lvl":2, "val":"op_3"}'})
+        res.send({time:5000 ,lvl:2,text:"El Lleó mor el dia que la Júlia fa 18 anys, com ha mort el Lleó?", op_1:"S'ha ennuegat menjant un croissant.", op_2:"Ha mort assassinat per algú.", op_3:"Ha mort per una sobredosis", title:"Escull la teva aventura | 2", opnum:3, op1_val:'"lvl":2, "val":"op_1"',op2_val:'"lvl":2, "val":"op_2"', op3_val:'"lvl":2, "val":"op_3"'})
+    }
+    if(lvl == 3){
+        if(req.body.lvl2 == 1){
+        res.send({time:7000 ,lvl:3,text:"La Júlia va passar per aquell carrer amb patinet elèctric i es va acostar per curiositat, quan va veure que era el seu avi el que estava estès al terra la Júlia... ", op_1:"Va posar-se a cridar.", op_2:"Es va desmaiar.", title:"Escull la teva aventura | 3", opnum:2, op1_val:'"lvl":3, "val":"op_1"',op2_val:'"lvl":3, "val":"op_2"'})
+        }
+        else if(req.body.lvl2 == 2){
+            res.send({time:5000 ,lvl:3,text:"Després de llegir la carta que en Lleó havia deixat escrita, la Júlia i en Gregor van anar cap a les rambles a trobar-se amb en Petrarca. Després d'alguns dies amb ell i d'aconseguir les cendres del Lleó, van cap a Sa Dragonera a deixar les seves cendres. Per a anar-hi, han de pujar en una barca que està estacionada al port, i hi ha un guardia que vigila qui passa. Per a passar...", op_1:"Li claven una pallissa al guardia.", op_2:"El Petrarca li dona diners al guardia", title:"Escull la teva aventura | 3", opnum:2, op1_val:'"lvl":3, "val":"op_1"',op2_val:'"lvl":3, "val":"op_2"'})
+        }
+        if(req.body.lvl2 == 3){
+            res.send({time:5000 ,lvl:3,text:"El Lleó té una sobredosis de...", op_1:"Sucre", op_2:"Sal", title:"Escull la teva aventura | 3", opnum:2, op1_val:'"lvl":3, "val":"op_1"',op2_val:'"lvl":3, "val":"op_2"'})
+        }
+
+    }
+    if(lvl == 4){
+        if(req.body.lvl2 == 3){
+            res.send({time:5000 ,lvl:3,text:"El Lleó té una sobredosis de...", op_1:"Sucre", op_2:"Sal", title:"Escull la teva aventura | 3", opnum:2, op1_val:'"lvl":3, "val":"op_1"',op2_val:'"lvl":3, "val":"op_2"'})
+        }
+    }
+    if(lvl == 5){
+        res.send({time:5000 ,lvl:5,text:"", op_1:"", op_2:"", op_3:"", title:"Escull la teva aventura | 5", opnum:3, op1_val:'{"lvl":5, "val":"op_1"}',op2_val:'{"lvl":5, "val":"op_2"}', op3_val:'{"lvl":5, "val":"op_3"}'})
     }
 })
 app.post("/users", (req,res)=>{
@@ -147,4 +189,4 @@ app.get("*", (req,res)=>{
     res.render("404")
 })
 
-http.createServer(app).listen(8090);
+https.createServer({key:fs.readFileSync('ssl/my_key.pem'),cert: fs.readFileSync('ssl/my_cert.crt')},app).listen(8090);
