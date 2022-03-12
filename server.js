@@ -2,12 +2,12 @@ var express = require("express")
 var https = require("https")
 var fs = require("fs")
 var http  = require("http")
-const session = require('express-session'); //To store the session variables
+const session = require('express-session');//not needed
 const bcryptjs = require('bcryptjs')
 const bodyParser = require("body-parser")
 const MongoClient = require("mongodb").MongoClient
-const socket = require("socket.io"); //TODO: implement socket.io cause it's cool and I like it.
-const exp = require("constants");
+const socket = require("socket.io"); //not needed at all
+const exp = require("constants"); //not needed
 
 
 var url = "mongodb://192.168.100.192:27017/escull_aventura";
