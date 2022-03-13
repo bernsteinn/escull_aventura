@@ -34,6 +34,7 @@
     "ejs": "^3.1.6",
     "express-session": "^1.17.2",
     "i": "^0.3.7",
+    "ip6addr": "^0.2.5",
     "mogodb": "^0.0.1-security",
     "mongodb": "^4.3.1",
     "npm": "^8.4.1",

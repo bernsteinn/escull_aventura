@@ -6,8 +6,10 @@ const session = require('express-session');//not needed
 const bcryptjs = require('bcryptjs')
 const bodyParser = require("body-parser")
 const MongoClient = require("mongodb").MongoClient
-const socket = require("socket.io"); //not needed at all
+const socket = require("socket.io"); 
 const exp = require("constants"); //not needed
+const ip6addr = require("ip6addr")
+
 
 
 var url = "mongodb://192.168.100.192:27017/escull_aventura";
@@ -31,7 +33,9 @@ app.use(session({
         secure:false
     }
   }))
-
+  function IntTwoChars(i) {
+    return (`0${i}`).slice(-2);
+    }
 app.get('/', (req,res) =>{
     res.render("inici.ejs")
 })
@@ -47,6 +51,10 @@ app.get('/api', (req,res) =>{
 app.post('/api', (req,res) =>{
     const lvl = req.body.lvl
     const option = req.body.val
+
+    var hora = new Date(new Date()-3600*1000*3).toISOString();
+    console.log(`\n${ip6addr.parse(req.socket.remoteAddress).toString({format: 'v4'})} at ${hora} -> Recieved answer from client ${lvl}, ${option}`)
+
     if(lvl == 1){
         if(option == 'op_1'){
             res.send({time:3000,text:"El LLeó mor i la historia segueix normalment.", title:"Escull la teva aventura | 1", status:true, case:"exit",lvl:2})
@@ -113,7 +121,8 @@ app.post('/api', (req,res) =>{
     }
 })
 app.post("/seg", (req,res)=>{
-    console.log(req.body)
+    var hora = new Date(new Date()-3600*1000*3).toISOString();
+    console.log(`\n${ip6addr.parse(req.socket.remoteAddress).toString({format: 'v4'})} at ${hora} -> Requested question`)
     const lvl = req.body.lvl
     if(lvl == 1){
             res.send({img:"/resources/img/mort.jpg", time:8000,lvl:1,text:"Molt bé, començem. A l'inici de la historia, el Lleó, l'avi de la Júlia, es mor. Creus que es el camí correcte o tu ho faries diferent?", title:"Escull la teva aventura | 1", op_1:"El Lleó es mor", op_2:"El Lleó no es mor", op1_val:'"lvl":1, "val":"op_1"', op2_val:'"lvl":1, "val":"op_2"',opnum:2})
@@ -152,8 +161,9 @@ app.post("/users", (req,res)=>{
         var dbo = db.db("escull_aventura");
         dbo.collection("users").findOne({"uid":user_id}, function(err, result){
             if (err) throw err;
-            console.log(result)
-            res.send(result)
+            var hora = new Date(new Date()-3600*1000*3).toISOString();
+            console.log(`\nServer at ${hora} -> Succesfully retireved data from user: ${user_id}`)
+                    res.send(result)
         })
     })
 }
@@ -166,7 +176,9 @@ app.post("/users", (req,res)=>{
               if (err) throw err;
               var response = {result, user_id}
               res.send(response)
-              console.log(result)
+              var hora = new Date(new Date()-3600*1000*3).toISOString();
+              console.log(`\nServer at ${hora} -> Succesfully created a new user: ${user_id}`)
+          
             });
           }); 
     }
@@ -179,7 +191,8 @@ app.post("/users", (req,res)=>{
             var updateLevel = {$set: {lvl:user_level}}
             dbo.collection("users").updateOne(uid, updateLevel, function(err, result) {
               if (err) throw err;
-              console.log(result)
+              var hora = new Date(new Date()-3600*1000*3).toISOString();
+              console.log(`\nServer at ${hora} -> Succesfully updated the level of user: ${user_id} to ${user_level}`)          
             });
           }); 
     }
