@@ -22,17 +22,6 @@ app.use( express.static(__dirname + '/public'))
 app.set('view engine', 'ejs');
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
-//*** For express-session ***//
-app.use(session({
-    secret:'secret',
-    resave:false,
-    saveUninitialized:true,
-    cookie:{
-        maxAge: 36000000,
-        httpOnly: false, // <- set httpOnly to false
-        secure:false
-    }
-  }))
   function IntTwoChars(i) {
     return (`0${i}`).slice(-2);
     }
@@ -201,8 +190,10 @@ app.post("/users", (req,res)=>{
 app.get("/favicon.ico", (req,res)=>{
     res.send
 })
+
+
 app.get("*", (req,res)=>{
     res.render("404")
 })
 
-http.createServer(app).listen(80);
+http.createServer(app).listen(80, "0.0.0.0");
